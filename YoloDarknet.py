@@ -8,7 +8,7 @@ class Cnn:
     confidence_idx: float
     threshold_idx: float
 
-    def init(self, weights_path: str, config_path: str, confidence_idx, threshold_idx, size):
+    def __init__(self, weights_path: str, config_path: str, confidence_idx, threshold_idx, size):
         """
         :param weights_path: Path to the weights file
         :param config_path: Path to the configuration file

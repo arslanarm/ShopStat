@@ -1,8 +1,8 @@
-from classes.Onnx_Class import CnnOnnx
+from Onnx_Class import CnnOnnx
 import cv2
 cnn = CnnOnnx('yolov7_dynamic.onnx')
 
-cap = cv2.VideoCapture('videos_for_test/tester.mp4')
+cap = cv2.VideoCapture('videos/tester.mp4')
 
 while True:
     ret, frame = cap.read()

@@ -16,5 +16,5 @@ That can help us to collect following information:
 
 Tested YoloV7-Tiny, YoloV7X Darknet, YoloV7X onnx.
 YoloV7x Darknet on CPU shows ambigous long times.
-YoloV7-tiny 9ms
+YoloV7-tiny 20ms
 Onnx 2ms - the fastest approach

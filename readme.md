@@ -15,6 +15,6 @@ That can help us to collect following information:
 ## Inference speed test
 
 Tested YoloV7-Tiny, YoloV7X Darknet, YoloV7X onnx.
-YoloV7x Darknet on CPU shows ambigous long times.
-YoloV7-tiny 20ms
-Onnx 2ms - the fastest approach
+YoloV7x Darknet on CPU shows ambigous long times, more than 400ms.
+YoloV7-tiny 90ms
+Onnx 20ms - the fastest approach

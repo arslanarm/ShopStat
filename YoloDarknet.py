@@ -90,3 +90,50 @@ class Cnn:
             return final_boxes, final_confidences, final_class_ids
         else:
             return None, None, None
+    def draw_boxes(self, boxes, image, color=(0, 255, 0), thickness=3, confidences=None, classes=None, labels=None):
+        """
+        :param boxes: Boxes (rectangle coordinates for drawing)
+        :param image: Image for drawing
+        :param color: Color
+        :param thickness: Font and rectangle thickness
+        :param confidences: List of corresponding confidence percentages (to be displayed as text above the rectangle)
+        :param classes: List of corresponding class ids (to be displayed as text above the rectangle)
+        :param labels: List of corresponding class names (to be displayed as text above the rectangle)
+        :return: Image with drawn recognition results
+        """
+        (H, W) = image.shape[:2]
+        copy = image.copy()
+        # If there are no recognition results, return the same image
+        if boxes is None:
+            return copy
+        # If in addition to rectangle coordinates, optional parameters confidences, classes, and labels are given
+        if confidences is not None:
+            # Round to two decimal places
+            confidences = np.around(confidences, 2)
+            # For each element
+            for bb, conf, class_id in zip(boxes, confidences, classes):
+                if class_id != 0:
+                    continue
+                # Calculate the coordinates
+                (centerX, centerY, width, height) = bb * np.array([W, H, W, H])
+                x1 = int(centerX - (width / 2))
+                y1 = int(centerY - (height / 2))
+                x2 = int(centerX + (width / 2))
+                y2 = int(centerY + (height / 2))
+                # Draw the rectangle
+                cv2.rectangle(copy, (x1, y1), (x2, y2), color, thickness)
+                # Overlay the text
+                cv2.putText(copy, '{}: {:.2f}'.format(labels[class_id], conf), (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,
+                            0.5, color, thickness)
+                # Draw a point in the center
+                cv2.circle(copy, (int(centerX), int(centerY)), 1, color, -1)
+        # Do the same but draw only the rectangles
+        else:
+            for bb in boxes:
+                (centerX, centerY, width, height) = bb * np.array([W, H, W, H])
+                x1 = int(centerX - (width / 2))
+                y1 = int(centerY - (height / 2))
+                x2 = int(centerX + (width / 2))
+                y2 = int(centerY + (height / 2))
+                cv2.rectangle(copy, (x1, y1), (x2, y2), color, thickness)
+        return copy

@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+from utils import time_it
+
 
 class Cnn:
     net: cv2.dnn_Net
@@ -22,6 +24,7 @@ class Cnn:
         self.ln = [ln[i - 1] for i in self.net.getUnconnectedOutLayers()]
         self.size = size
 
+    @time_it
     def get_bboxes(self, image, rel=True) -> (list[list[float]], list[float]):
         """
         :param rel: relative coordinates
@@ -90,6 +93,7 @@ class Cnn:
             return final_boxes, final_confidences, final_class_ids
         else:
             return None, None, None
+
     def draw_boxes(self, boxes, image, color=(0, 255, 0), thickness=3, confidences=None, classes=None, labels=None):
         """
         :param boxes: Boxes (rectangle coordinates for drawing)

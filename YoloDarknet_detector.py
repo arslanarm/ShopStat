@@ -1,9 +1,9 @@
 import cv2
+from YoloDarknet import Cnn
 
-from classes.cnn_class import Cnn
-cnn = Cnn('yolov7-tiny.weights', 'yolov7-tiny.cfg', 0.3, 0.5, 512)
+cnn = Cnn('yolov7x.weights', 'yolov7x.cfg', 0.3, 0.5, 512)
 
-cap = cv2.VideoCapture('videos_for_test/tester.mp4')
+cap = cv2.VideoCapture('videos/tester.mp4')
 
 while True:
     ret, frame = cap.read()

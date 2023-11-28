@@ -1,2 +1,13 @@
 .idea/
 .vscode/
+/classes
+# dependencies
+/front/node_modules
+/front/.pnp
+/front/.pnp.js
+
+# testing
+/front/coverage
+
+# production
+/front/build

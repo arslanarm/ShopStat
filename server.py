@@ -6,7 +6,7 @@ from classes.class_db_connector import DBConnector
 from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 
-conn = sqlite3.connect('stat_database.db', check_same_thread=False)
+conn = sqlite3.connect('database/stat_database.db', check_same_thread=False)
 
 app = Flask(__name__)
 cors = CORS(app)

@@ -1,7 +1,4 @@
-try:
-    from cv2 import cv2
-except:
-    import cv2
+import cv2
 
 
 class Zone:

@@ -9,13 +9,12 @@ import numpy as np
 from classes.Cnn_onnx import CnnOnnx
 from classes.class_zones import Zone
 from classes.class_db_connector import DBConnector
+
 try:
     from cv2 import cv2
 except:
     import cv2
 
-
-# TODO проблема, заново начинает тот же видос смотреть
 
 def draw_boxes(frame, bboxes, track_ids):
     for bbox, idx in zip(bboxes, track_ids):
@@ -64,7 +63,7 @@ class VideoManager:
         self.show = show
         self.db = DBConnector(db)
         self.cnn = CnnOnnx('classes/yolov7darknet/yolov7_dynamic.onnx',
-                       640)
+                           640)
 
         max_cosine_distance = 0.6
         nn_budget = None
@@ -156,7 +155,7 @@ class VideoManager:
                                                                        (int(track.mean[0]), int(track.mean[1])))
                     else:
                         current_tracks[track.track_id].history.append((int(track.mean[0]), int(track.mean[1])))
-                if track.time_since_update > max_age-1:
+                if track.time_since_update > max_age - 1:
                     # print(f'Track ended: {track.track_id}')
                     # print(current_tracks[track.track_id].start, current_tracks[track.track_id].get_last())
                     track_points = (current_tracks[track.track_id].start, current_tracks[track.track_id].get_last())
@@ -181,7 +180,7 @@ class VideoManager:
             for start, end in points:
                 image = cv2.circle(image, start, 6, (0, 255, 0), -1)
                 image = cv2.circle(image, end, 6, (0, 0, 255), -1)
-                image = cv2.line(image, start,end, (255, 0, 0), 2)
+                image = cv2.line(image, start, end, (255, 0, 0), 2)
 
             image = zone.draw(image)
             if self.show:

@@ -4,7 +4,7 @@ from classes.class_zones import CircleZone, DividingLine
 directory = 'videos'
 processed = []
 
-manager = VideoManager(processed, directory, db='stat_database.db', show=True)
+manager = VideoManager(processed, directory, db='database/stat_database.db', show=True)
 
 circle_zone = CircleZone((0.6, 0.9), 0.15)
 line_zone = DividingLine((0.6, 0), (0.5, 1), False)

@@ -11,3 +11,5 @@
 
 # production
 /front/build
+/videos
+/deep_sort/__pycache__

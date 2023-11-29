@@ -26,7 +26,7 @@ class CircleZone(Zone):
 
     def process_coords(self, points):
         passed = {'in': 0,
-                  'out': 0}
+                  'out': 0, "trash": 0}
 
         for start, end in points:
             sx, sy = start
@@ -39,6 +39,8 @@ class CircleZone(Zone):
                 passed['out'] += 1
             elif not start_inside and end_inside:
                 passed['in'] += 1
+            else:
+                passed["trash"] += 1
         return passed
 
     def process_single(self, track):
@@ -56,7 +58,7 @@ class CircleZone(Zone):
             return 'trash'
 
     def inside(self, x, y):
-        return (x - self.center_x) ** 2 + (y - self.center_y) ** 2 < self.rad
+        return (x - self.center_x) ** 2 + (y - self.center_y) ** 2 < self.rad ** 2
 
 
 class DividingLine(Zone):

@@ -9,7 +9,6 @@ import numpy as np
 from classes.Cnn_onnx import CnnOnnx
 from classes.class_zones import Zone
 from classes.class_db_connector import DBConnector
-
 try:
     from cv2 import cv2
 except:
@@ -63,7 +62,7 @@ class VideoManager:
         self.show = show
         self.db = DBConnector(db)
         self.cnn = CnnOnnx('classes/yolov7darknet/yolov7_dynamic.onnx',
-                           640)
+                       640)
 
         max_cosine_distance = 0.6
         nn_budget = None
@@ -117,7 +116,7 @@ class VideoManager:
         video = cv2.VideoWriter('video.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 1, (width, height))
 
         points = []
-
+        points_rel = []
         while True:
             counter += 1
             ret, frame = cap.read()
@@ -155,12 +154,13 @@ class VideoManager:
                                                                        (int(track.mean[0]), int(track.mean[1])))
                     else:
                         current_tracks[track.track_id].history.append((int(track.mean[0]), int(track.mean[1])))
-                if track.time_since_update > max_age - 1:
+                if track.time_since_update > max_age-1:
                     # print(f'Track ended: {track.track_id}')
                     # print(current_tracks[track.track_id].start, current_tracks[track.track_id].get_last())
                     track_points = (current_tracks[track.track_id].start, current_tracks[track.track_id].get_last())
                     rel_track = self.track_to_rel(track_points, frame)
                     points.append(track_points)
+                    points_rel.append(rel_track)
                     # print(rel_track)
                     print(zone.process_single(rel_track))
                     del current_tracks[track.track_id]
@@ -180,7 +180,7 @@ class VideoManager:
             for start, end in points:
                 image = cv2.circle(image, start, 6, (0, 255, 0), -1)
                 image = cv2.circle(image, end, 6, (0, 0, 255), -1)
-                image = cv2.line(image, start, end, (255, 0, 0), 2)
+                image = cv2.line(image, start,end, (255, 0, 0), 2)
 
             image = zone.draw(image)
             if self.show:
@@ -193,4 +193,4 @@ class VideoManager:
         if self.show:
             cv2.destroyAllWindows()
             video.release()
-        return zone.process_coords(points)
+        return zone.process_coords(points_rel)
